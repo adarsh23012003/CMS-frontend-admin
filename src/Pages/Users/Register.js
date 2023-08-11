@@ -44,7 +44,7 @@ function Register() {
               <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl'>
                 Create and account
               </h1>
-              <for className='space-y-4 md:space-y-6'>
+              <form className='space-y-4 md:space-y-6'>
                 {/* **name** */}
                 <div>
                   <label
@@ -183,7 +183,7 @@ function Register() {
                     Login here
                   </span>
                 </p>
-              </for>
+              </form>
             </div>
           </div>
         </div>
