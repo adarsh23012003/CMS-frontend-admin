@@ -1,8 +1,17 @@
+import { Route, Routes } from "react-router-dom";
+import Home from "./Pages/Home";
+import Contact from "./Pages/Contact";
+import NoPage from "./Pages/NoPage";
+
 function App() {
   return (
-    <div>
-      <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-    </div>
+    <>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='*' element={<NoPage />} />
+      </Routes>
+    </>
   );
 }
 
