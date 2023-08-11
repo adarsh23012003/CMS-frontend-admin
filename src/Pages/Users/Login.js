@@ -15,7 +15,7 @@ const Login = () => {
     instance
       .post("/login", formData)
       .then(function (response) {
-        console.log(response.data.token);
+        // console.log(response.data.token);
         if (response.data.token) {
           setFormData({
             email: "",
