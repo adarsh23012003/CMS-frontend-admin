@@ -15,12 +15,13 @@ const Login = () => {
     instance
       .post("/login", formData)
       .then(function (response) {
-        // console.log(response.data.token);
+        console.log(response.data.token);
         if (response.data.token) {
           setFormData({
             email: "",
             password: "",
           });
+          navigate("/");
         }
         setToken(response.data.token);
         const jwtToken = response.data.token;
@@ -40,10 +41,21 @@ const Login = () => {
           </h1>
           <div className='w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0  dark:border-gray-700'>
             <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
-              <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl '>
+              <h1
+                title='Hello, world!'
+                className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl '
+              >
                 Sign in to your account
               </h1>
-              <form className='space-y-4 md:space-y-6'>
+              <form
+                className='space-y-4 md:space-y-6'
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (formData.email || formData.password) {
+                    handelSubmit();
+                  }
+                }}
+              >
                 {/* ********* Email ************** */}
                 <div>
                   <label
@@ -80,14 +92,7 @@ const Login = () => {
                     required=''
                   />
                 </div>
-                <button
-                  onClick={() => {
-                    if (formData.email || formData.password) {
-                      handelSubmit();
-                    }
-                  }}
-                  className='w-full text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'
-                >
+                <button className='w-full text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'>
                   Login
                 </button>
                 <p className='text-sm font-light text-gray-500 dark:text-gray-400'>
