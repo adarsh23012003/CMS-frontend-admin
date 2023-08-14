@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { instance, setToken } from "../../Axios/axiosConfig";
 import { useState } from "react";
 import { setCookie } from "../../Axios/cookieConfig";
@@ -9,7 +9,9 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    captcha: "",
   });
+  const [captcha, setCaptcha] = useState("");
 
   function handelSubmit() {
     instance
@@ -31,6 +33,20 @@ const Login = () => {
         console.log(error);
       });
   }
+  useEffect(() => {
+    const getCaptchaCode = async () => {
+      instance
+        .get("/captcha")
+        .then(function (response) {
+          console.log(response.data.captcha);
+          setCaptcha(response.data.captcha);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+    getCaptchaCode();
+  }, []);
 
   return (
     <div>
@@ -92,6 +108,24 @@ const Login = () => {
                     required=''
                   />
                 </div>
+                {/* ********* Captcha ************** */}
+                <div className='grid grid-cols-1 xm:grid-cols-2 gap-5'>
+                  <div className='border p-2.5 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500 border-gray-300 text-gray-900 sm:text-sm text-center rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full'>
+                    {captcha}
+                  </div>
+                  <div className='w-full'>
+                    <input
+                      onChange={(e) => {
+                        formData.captcha = e.target.value;
+                      }}
+                      type='text'
+                      required=''
+                      placeholder='Enter captcha'
+                      className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                    />
+                  </div>
+                </div>
+
                 <button className='w-full text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800'>
                   Login
                 </button>
