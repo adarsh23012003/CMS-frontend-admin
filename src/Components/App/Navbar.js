@@ -18,8 +18,8 @@ function Navbar() {
     console.log("token delete");
     const deleteToken = deleteCookie("token");
     if (deleteToken) {
-      setIsLogin(false);
       window.location.reload();
+      setIsLogin(false);
     }
   };
 

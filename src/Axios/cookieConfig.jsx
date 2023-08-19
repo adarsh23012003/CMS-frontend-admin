@@ -27,6 +27,7 @@ function getCookieComponent(cname) {
 
 function deleteCookie(name) {
   document.cookie = name + "=; Max-Age=-99999999;";
+  return true;
 }
 
 export { setCookieComponent, getCookieComponent, deleteCookie };
