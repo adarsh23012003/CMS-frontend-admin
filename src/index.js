@@ -6,13 +6,16 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import Navbar from "./Components/App/Navbar";
 import Footer from "./Components/App/Footer";
+import { CookiesProvider } from "react-cookie";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
   <BrowserRouter>
     <Navbar />
-    <App />
+    <CookiesProvider>
+      <App />
+    </CookiesProvider>
     <Footer />
   </BrowserRouter>
   // </React.StrictMode>
