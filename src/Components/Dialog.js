@@ -1,20 +1,26 @@
 import React, { useRef, useState } from "react";
 import { formInstance } from "../Axios/axiosConfig";
+import { getCookieComponent } from "../Axios/cookieConfig";
 function Dialog({ visible, close }) {
   const [uploadFile, setUploadFile] = useState("");
   const inputRef = useRef(null);
 
   const UploadPDF = () => {
-    var formData = new FormData();
-    formData.append("pdf", uploadFile);
-    formInstance
-      .post("/subject/upload", formData)
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if (getCookieComponent("token")) {
+      formInstance.defaults.headers.common[
+        "Authorization"
+      ] = `Barer ${getCookieComponent("token")}`;
+      var formData = new FormData();
+      formData.append("pdf", uploadFile);
+      formInstance
+        .post("/subject/upload", formData)
+        .then(function (response) {
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   };
   return (
     <>

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../Axios/cookieConfig";
+import { getCookieComponent } from "../Axios/cookieConfig";
 
 function AuthenticLogin({ Component }) {
   const navigate = useNavigate();
   useEffect(() => {
-    const token = getCookie("token");
+    const token = getCookieComponent("token");
     if (!token) {
       navigate("/login");
     }

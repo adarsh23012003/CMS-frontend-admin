@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import { instance, setFormToken, setToken } from "../../Axios/axiosConfig";
 import { useState } from "react";
-import { setCookie } from "../../Axios/cookieConfig";
+import { setCookieComponent } from "../../Axios/cookieConfig";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
+  // const cookies = new Cookies();
+  const [cookie, setCookie] = useCookies();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -17,18 +20,20 @@ const Login = () => {
     instance
       .post("/login", formData)
       .then(function (response) {
+        const jwtToken = response.data.token;
         // console.log(response.data.token);
-        if (response.data.token) {
+        if (jwtToken) {
           setFormData({
             email: "",
             password: "",
           });
           navigate("/");
         }
-        setToken(response.data.token);
-        setFormToken(response.data.token);
-        const jwtToken = response.data.token;
-        setCookie("token", jwtToken, 1 / 24);
+        // setCookie("token", jwtToken, { expires });
+        setCookie("token", jwtToken, { maxAge: 3600 });
+        setToken(jwtToken);
+        setFormToken(jwtToken);
+        // setCookieComponent("token", jwtToken, 1 / 24);
       })
       .catch(function (error) {
         console.log(error);

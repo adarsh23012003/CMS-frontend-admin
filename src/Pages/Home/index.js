@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { instance } from "../../Axios/axiosConfig";
 import Dialog from "../../Components/Dialog";
 import { FaRegFilePdf } from "react-icons/fa";
+import { getCookieComponent } from "../../Axios/cookieConfig";
 
 function Home() {
   const [dialog, setDialog] = useState(false);
@@ -11,22 +12,27 @@ function Home() {
 
   useEffect(() => {
     function getData() {
-      instance
-        .get(dropDownValue)
-        .then(function (response) {
-          if (dropDownValue === "/subject/allPDF") {
-            setCurrentPDF("");
-            setCurrentPDF(response.data.pdf);
-          } else {
-            setCurrentPDF("");
-            setCurrentPDF(response.data.upload);
-            // console.log(response.data);
-          }
-        })
-        .catch(function (error) {
-          console.log(error.response.data);
-          setError(error.response.data);
-        });
+      if (getCookieComponent("token")) {
+        instance.defaults.headers.common[
+          "Authorization"
+        ] = `Barer ${getCookieComponent("token")}`;
+        instance
+          .get(dropDownValue)
+          .then(function (response) {
+            if (dropDownValue === "/subject/allPDF") {
+              setCurrentPDF("");
+              setCurrentPDF(response.data.pdf);
+            } else {
+              setCurrentPDF("");
+              setCurrentPDF(response.data.upload);
+              // console.log(response.data);
+            }
+          })
+          .catch(function (error) {
+            console.log(error.response.data);
+            setError(error.response.data);
+          });
+      }
     }
     getData();
   }, [dropDownValue]);
