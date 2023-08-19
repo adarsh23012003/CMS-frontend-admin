@@ -4,7 +4,7 @@ function Dialog({ visible, close }) {
   const [uploadFile, setUploadFile] = useState("");
   const inputRef = useRef(null);
 
-  const UploadImage = () => {
+  const UploadPDF = () => {
     var formData = new FormData();
     formData.append("pdf", uploadFile);
     formInstance
@@ -53,7 +53,7 @@ function Dialog({ visible, close }) {
                 <button
                   onClick={() => {
                     if (uploadFile) {
-                      UploadImage();
+                      UploadPDF();
                       close();
                     }
                   }}
