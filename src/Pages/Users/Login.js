@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { instance, setToken } from "../../Axios/axiosConfig";
+import { instance, setFormToken, setToken } from "../../Axios/axiosConfig";
 import { useState } from "react";
 import { setCookie } from "../../Axios/cookieConfig";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +26,7 @@ const Login = () => {
           navigate("/");
         }
         setToken(response.data.token);
+        setFormToken(response.data.token);
         const jwtToken = response.data.token;
         setCookie("token", jwtToken, 1 / 24);
       })
@@ -116,7 +117,7 @@ const Login = () => {
                   <div className='w-full'>
                     <input
                       onChange={(e) => {
-                        formData.captcha = e.target.value;
+                        formData.captcha = e.target.value.trim();
                       }}
                       type='text'
                       required=''
