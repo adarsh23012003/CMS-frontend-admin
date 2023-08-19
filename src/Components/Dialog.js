@@ -1,15 +1,13 @@
 import React, { useRef, useState } from "react";
-import { instance } from "../Axios/axiosConfig";
+import { formInstance } from "../Axios/axiosConfig";
 function Dialog({ visible, close }) {
   const [uploadFile, setUploadFile] = useState("");
   const inputRef = useRef(null);
-  console.log(uploadFile);
 
   const UploadImage = () => {
     var formData = new FormData();
     formData.append("pdf", uploadFile);
-    console.log(formData);
-    instance
+    formInstance
       .post("/subject/upload", formData)
       .then(function (response) {
         console.log(response.data);
